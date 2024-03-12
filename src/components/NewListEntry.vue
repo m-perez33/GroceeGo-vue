@@ -3,13 +3,14 @@
       
         <form  v-on:submit.prevent="saveEntry()">
             <h2 class="add" >ADD TO LIST:</h2>
-            <input class="product-input" name="title-input" type="text" placeholder="Product" v-model="listEntry.productName" />
-            <input class="cost-input" name="cost-input" type="text" placeholder="Cost" v-model="listEntry.cost" />
+            <input class="product-input info-entry" name="title-input" type="text" placeholder="Product" v-model="listEntry.productName" />
+            $ <input class="cost-input info-entry" name="cost-input" type="text" placeholder="Cost" v-model="listEntry.cost" />
             <select class="select-style" v-on:change.prevent="perOption()" v-model="selectedOption">
+                <option :value="null">hi</option>
                 <option>Per lb</option>
-                <option>Per items</option>
+                <option>Per item</option>
             </select>
-            <input class="quantity-input" name="quantity-input" type="text" placeholder="Quantity" v-model="listEntry.quantity" />
+            <input class="quantity-input info-entry" name="quantity-input" type="text" placeholder="Quantity" v-model="listEntry.quantity" />
             <button>Save</button>
         </form>
     </div>
@@ -41,6 +42,16 @@ export default {
             this.$store.commit('SAVE_LIST_ENTRY', this.listEntry);
             this.listEntry = {};
            //console.log(this.listEntry)
+        },
+        editEntry() {
+            this.listEntry.listId = this.$store.state.currentList
+            //entry id would come from dao coding this for now
+            this.listEntry.listEntryId = this.$store.state.listEntries.length + 1 + "";
+            console.log(this.listEntry)
+
+            this.$store.commit('SAVE_LIST_ENTRY', this.listEntry);
+            this.listEntry = {};
+           //console.log(this.listEntry)
         }
 
     }
@@ -52,7 +63,7 @@ export default {
     display: flex;
     border: 1px solid black;
     border-radius: 10px;
-    height: 200px0px;
+    height: 200px;
     place-items: center;
     width: auto; 
     padding-bottom: 20PX;
@@ -74,7 +85,7 @@ export default {
 
     background-color: rgb(255, 250, 250);
     border: 1px solid rgb(101, 101, 101);
-    height: 30px;
+    height: 50px;
     width: 60px;
     margin-right: 20px;
 }

@@ -8,6 +8,7 @@
             <list-entry v-for="entry in entries" v-bind:entry="entry" v-bind:key="entry.listEntryId" 
              />
         </div>
+        <span>List total ${{totalAdd}}</span>
     </main>
 </template>
   
@@ -19,7 +20,7 @@ import NewListEntry from './NewListEntry.vue';
 export default {
     data() {
         return {
-            //currentListId: currentId
+            total: 'hi'
         }
     },
    
@@ -29,7 +30,18 @@ export default {
             return this.$store.state.listEntries.filter((entry) => {
                 return entry.listId === this.$store.state.currentList
             });
-        }
+        }, 
+        totalAdd() {
+           
+            return this.entries.reduce((acc, entry) => {
+                let sum =entry.cost*entry.quantity
+                console.log(sum)
+                return acc += sum
+            },0)
+
+            return this.$store.state.listEntries[0].cost;
+        },
+
     },
     components: {
     ListEntry,

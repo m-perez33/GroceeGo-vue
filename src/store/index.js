@@ -104,8 +104,20 @@ export function createStore() {
                 state.listEntries = arrRemain;
 
                 console.log("this remains" + state.listEntries)
-
+ 
+            },
+            EDIT_LIST_ENTRY(state, listEntry) {
                 
+                let arr = state.listEntries;
+
+                arr.forEach((entry)=>{
+                    if(entry.listEntryId === listEntry.listEntryId){
+                        entry.cost = listEntry.cost
+                        entry.quantity = listEntry.quantity
+                    }
+                })
+
+                //state.listEntries.push(listEntry);
             },
         },
         actions: {},
