@@ -4,6 +4,7 @@ export function createStore() {
     return _createStore({
         state: {
             currentList: "1",
+            currentListEntryId:"",
             lists: [
                 {
                     listId: "1",
@@ -87,8 +88,8 @@ export function createStore() {
             ]
         },
         mutations: {
-            CHANGE_CURRENT(state, current){
-              state.currentList = current;
+            CHANGE_CURRENT(state, current) {
+                state.currentList = current;
             },
             FLIP_DONE(state, buttonFlip) {
                 buttonFlip.read = !buttonFlip.read;
@@ -98,27 +99,31 @@ export function createStore() {
             },
             REMOVE_LIST_ENTRY(state, listEntry) {
                 let arr = state.listEntries;
-                let arrRemain = arr.filter((entry)=>{
+                let arrRemain = arr.filter((entry) => {
                     return entry.listEntryId !== listEntry.listEntryId
                 })
                 state.listEntries = arrRemain;
 
-                console.log("this remains" + state.listEntries)
- 
+                // console.log("this remains" + state.listEntries)
+
             },
-            EDIT_LIST_ENTRY(state, listEntry) {
-                
+            CHANGE_CURRENT_ENTRY(state, current) {
+                state.currentListEntryId = current;
+            },
+           
+            EDIT_ENTRY(state, value) {
                 let arr = state.listEntries;
 
-                arr.forEach((entry)=>{
-                    if(entry.listEntryId === listEntry.listEntryId){
-                        entry.cost = listEntry.cost
-                        entry.quantity = listEntry.quantity
+                arr.forEach((entry) => {
+                    if (entry.listEntryId === state.currentListEntryId) {
+                        entry.cost = value
                     }
+
+                    //console.log(entry.cost)
+
                 })
 
-                //state.listEntries.push(listEntry);
-            },
+            }
         },
         actions: {},
         modules: {},

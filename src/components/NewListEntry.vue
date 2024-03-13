@@ -43,16 +43,7 @@ export default {
             this.listEntry = {};
            //console.log(this.listEntry)
         },
-        editEntry() {
-            this.listEntry.listId = this.$store.state.currentList
-            //entry id would come from dao coding this for now
-            this.listEntry.listEntryId = this.$store.state.listEntries.length + 1 + "";
-            console.log(this.listEntry)
-
-            this.$store.commit('SAVE_LIST_ENTRY', this.listEntry);
-            this.listEntry = {};
-           //console.log(this.listEntry)
-        }
+       
 
     }
 };

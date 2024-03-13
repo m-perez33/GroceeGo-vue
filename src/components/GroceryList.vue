@@ -35,11 +35,10 @@ export default {
            
             return this.entries.reduce((acc, entry) => {
                 let sum =entry.cost*entry.quantity
-                console.log(sum)
+                //console.log(sum)
                 return acc += sum
             },0)
 
-            return this.$store.state.listEntries[0].cost;
         },
 
     },
