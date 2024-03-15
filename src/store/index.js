@@ -107,16 +107,32 @@ export function createStore() {
                 // console.log("this remains" + state.listEntries)
 
             },
+            ADD_LIST(state, list){
+                state.lists.push(list);
+            },
             CHANGE_CURRENT_ENTRY(state, current) {
                 state.currentListEntryId = current;
             },
            
-            EDIT_ENTRY(state, value) {
+            EDIT_COST(state, value) {
                 let arr = state.listEntries;
 
                 arr.forEach((entry) => {
                     if (entry.listEntryId === state.currentListEntryId) {
                         entry.cost = value
+                    }
+
+                    //console.log(entry.cost)
+
+                })
+
+            },
+            EDIT_QUANTITY(state, value) {
+                let arr = state.listEntries;
+
+                arr.forEach((entry) => {
+                    if (entry.listEntryId === state.currentListEntryId) {
+                        entry.quantity = value
                     }
 
                     //console.log(entry.cost)

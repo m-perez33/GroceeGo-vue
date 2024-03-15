@@ -4,11 +4,11 @@
     </div>
     <main>
         <div id="list">
-            <new-list-entry />
+            <new-list-entry :current="$store.state.currentList"/>
             <list-entry v-for="entry in entries" v-bind:entry="entry" v-bind:key="entry.listEntryId" 
              />
         </div>
-        <span>List total ${{totalAdd}}</span>
+        <h2 class="add">LIST {{ $store.state.currentList}} TOTAL = ${{totalAdd}}</h2>
     </main>
 </template>
   
@@ -16,10 +16,12 @@
 
 import ListEntry from '../components/ListEntry.vue';
 import NewListEntry from './NewListEntry.vue';
+import NavBar from './NavBar.vue';
 
 export default {
     data() {
         return {
+          //  current: ,
             total: 'hi'
         }
     },
@@ -28,6 +30,8 @@ export default {
 
         entries() {
             return this.$store.state.listEntries.filter((entry) => {
+              //  console.log(this.current)
+
                 return entry.listId === this.$store.state.currentList
             });
         }, 
@@ -44,7 +48,8 @@ export default {
     },
     components: {
     ListEntry,
-    NewListEntry
+    NewListEntry,
+    NavBar
 }
 }
 

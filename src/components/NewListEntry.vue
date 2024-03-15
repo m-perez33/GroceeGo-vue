@@ -2,11 +2,12 @@
     <div class="container">
       
         <form  v-on:submit.prevent="saveEntry()">
-            <h2 class="add" >ADD TO LIST:</h2>
+            <h2 class="add" >ADD TO LIST: </h2>
+            <p>{{ currentList }}</p>
             <input class="product-input info-entry" name="title-input" type="text" placeholder="Product" v-model="listEntry.productName" />
             $ <input class="cost-input info-entry" name="cost-input" type="text" placeholder="Cost" v-model="listEntry.cost" />
             <select class="select-style" v-on:change.prevent="perOption()" v-model="selectedOption">
-                <option :value="null">hi</option>
+                <option :value="null">Select</option>
                 <option>Per lb</option>
                 <option>Per item</option>
             </select>
@@ -21,10 +22,12 @@ export default {
     data() {
         return {
             listEntry: {},
+            currentList: this.$store.currentList,
             selectedOption: null
             
         }
     },
+    props: [ 'current' ],
     methods: {
         perOption() {
             if (this.selectedOption === "Per lb") {
@@ -75,9 +78,10 @@ export default {
 .select-style{
 
     background-color: rgb(255, 250, 250);
+    border-radius: 10px;
     border: 1px solid rgb(101, 101, 101);
-    height: 50px;
-    width: 60px;
+    height: 40px;
+    width: 80px;
     margin-right: 20px;
 }
 

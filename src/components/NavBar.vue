@@ -1,15 +1,14 @@
 <template>
     <nav class="nav-style">
         <div class="left">
-            <select class="info-nav" :disabled= "$store.state.lists.length < 1" v-on:change.prevent="currentOption()" v-model="selectedOption">
+            <select class="info-nav" :disabled="$store.state.lists.length < 1" v-on:change.prevent="currentOption()"
+                v-model="selectedOption">
                 <option :value="null">Edit list</option>
-                <option v-for="list in $store.state.lists" 
-                v-bind:list="list" 
-                v-bind:key="list.Id" 
-               >{{ list.listId }}</option>
+                <option v-for="list in $store.state.lists" v-bind:list="list" v-bind:key="list.Id">{{ list.listId }}
+                </option>
 
             </select>
-            <button class="info-nav"> Create lists</button>
+            <button class="info-nav" v-on:click="createList"> Create lists</button>
         </div>
         <h1 class=" right">GROCEE-GO</h1>
     </nav>
@@ -19,7 +18,9 @@
 export default {
     data() {
         return {
-            selectedOption: null
+            editvalue: this.$store.state.lists[0].listId,
+            selectedOption: null,
+            list: {}
         };
     },
     methods: {
@@ -30,6 +31,24 @@ export default {
             console.log(this.$store.state.currentList)
 
 
+        },
+
+        createList() {
+            this.list.listId = this.$store.state.lists.length + 1 + "";
+            console.log(this.$store.state.lists.length)
+            const date = new Date();
+
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            let year = date.getFullYear();
+
+            // This arrangement can be altered based on how we want the date's format to appear.
+            let currentDate = `${year}-${month}-${day}`;
+            this.list.date = currentDate
+            console.log(currentDate); // "17-6-2022"            this.list.date = date
+            this.$store.commit("ADD_LIST", this.list)
+            console.log(this.$store.state.lists.length)
+
         }
 
     }
@@ -37,7 +56,6 @@ export default {
 </script>
   
 <style>
-
 .nav-style {
 
     height: 50px;
@@ -105,7 +123,11 @@ nav {
     width: 100px;
     padding: 0px;
     margin: 15px;
-
-
 }
+    .info-nav:hover{
+        background-color: rgb(177, 186, 195);
+        cursor: pointer;
+    }
+
+
 </style>
