@@ -3,6 +3,7 @@ import { createStore as _createStore } from 'vuex';
 export function createStore() {
     return _createStore({
         state: {
+            isDeleted:true,
             currentList: "1",
             currentListEntryId:"",
             lists: [
@@ -34,62 +35,18 @@ export function createStore() {
                 }
             ],
             listEntries: [
-                {
-                    listId: "1",
-                    listEntryId: "1",
-                    productId: "1",
-                    productName: "Banana",
-                    cost: "2",
-                    quantity: "10",
-                    category: "1"
-
-                },
-                {
-                    listId: "1",
-                    listEntryId: "2",
-                    productId: "4",
-                    productName: "Ellios",
-                    cost: "3",
-                    quantity: "3",
-                    category: "2"
-
-                },
-                {
-                    listId: "2",
-                    listEntryId: "3",
-                    productId: "1",
-                    productName: "Banana",
-                    cost: "5",
-                    quantity: "10",
-                    category: "1"
-
-                },
-                {
-                    listId: "2",
-                    listEntryId: "4",
-                    productId: "3",
-                    productName: "Corn Flakes",
-                    cost: "4",
-                    quantity: "8",
-                    category: "1"
-
-                },
-                {
-                    listId: "1",
-                    listEntryId: "5",
-                    productId: "2",
-                    productName: "Pork",
-                    cost: "3",
-                    quantity: "5",
-                    category: "1"
-
-                }
-
+               
             ]
         },
         mutations: {
             CHANGE_CURRENT(state, current) {
                 state.currentList = current;
+            },
+            CHANGE_ISDELETED(state, current) {
+                state.isDeleted = current;
+            },
+            UPDATE_LIST_ENTRIES(state, current){
+                state.listEntries = current
             },
             FLIP_DONE(state, buttonFlip) {
                 buttonFlip.read = !buttonFlip.read;

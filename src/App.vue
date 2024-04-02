@@ -1,6 +1,5 @@
 <template>
   <div>
-    <NavBar />
   </div>
   <main>
     <div id="list-item">
@@ -9,21 +8,37 @@
   </main>
 </template>
 
-<script >
+<script>
 
 import GroceryList from './components/GroceryList.vue';
-import NavBar from './components/NavBar.vue';
-import ListEntry from './components/ListEntry.vue';
+import listEntryService from "./services/ListEntryService";
 
 export default {
+//add entry list here so it adjusts on change
 
-
+data() {
+    return {
+      //  current: ,
+      //return entries associates with current list
+      listEntries: [],
+    };
+  },
   components: {
     
-    NavBar,
-    ListEntry,
+   
     GroceryList
-}
+},
+ methods: {
+    getEntries(id) {
+      return listEntryService.get(id).then((response) => {
+       return this.listEntries = response.data;
+        console.log(this.lists);
+      });
+    },
+  },
+  created(){
+      this.getEntries(this.$store.state.currentList)
+  },
 }
 
 </script>
