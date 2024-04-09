@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const http = axios.create({
-  // withCredentials: false,
   baseURL: 'http://localhost:8080'
 });
 

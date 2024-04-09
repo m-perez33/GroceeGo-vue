@@ -55,13 +55,12 @@ export default {
       lastProduct: {},
       currentList: this.$store.currentList,
       selectedOption: null,
+      message: ""
     };
   },
   props: ["current", "products"],
-  setup(props) {
-    // setup() receives props as the first argument.
-    console.log(props.products);
-  },
+
+ 
   methods: {
     perOption() {
       if (this.selectedOption === "Per lb") {
@@ -73,137 +72,110 @@ export default {
 
     createEntry() {
       //get products
-      // console.log(this.$route.params.id)
-      // await this.getAllProducts()
+   
       this.listEntry.listId = this.$route.params.id;
-      //this.listService.productName =
 
-      console.log(this.products);
-      console.log(this.listEntry);
       //go through products and check if it exists
 
       this.products.forEach((item) => {
-        console.log(item.productId);
         if (item.productName === this.listEntry.productName) {
           //if exists assign that product id to new list entry,
           //dont create new product
           this.listEntry.productId = item.productId;
-          console.log(this.item);
           //then make entry
           this.makeEntry();
           this.itExists = true;
         }
       });
       if (this.itExists === false) {
+        //if it does not exist create product
         console.log("made it this far");
         this.createProduct();
       }
 
-      //await this.checkforProduct();
-
-      // console.log(this.current)
-      //this.listEntry.productId = "5"
     },
     async makeEntry() {
-      console.log(this.lastProduct);
-
-      //this.listEntry.productId = this.lastProduct.productId;
-      console.log(this.listEntry);
+     //make list entry
 
       await listEntryService
         .create(this.listEntry)
         .then((response) => {
           if (response.status === 201) {
             console.log("created");
-          } //console.log(this.lists);
+          } 
         })
         .catch((error) => {
-          console.log(error + " fail");
+          console.log(error);
         });
       this.listEntry = {};
       this.getEntries(this.$route.params.id);
     },
 
     async createProduct() {
-      //assign current list entry name to product
+      //assign current list id and entry name to product
       this.product.listId = this.current;
       this.product.productName = this.listEntry.productName;
 
-      // await this.getAllProducts(this.product);
-
-      console.log(this.product);
-
+      //create product 
       await productService
         .create(this.product)
         .then((response) => {
           if (response.status === 201) {
             console.log("created product");
-            //if successful retrieve product for idmake it into an entry
-            //change to get by id
-          } //console.log(this.lists);
+            //if successful retrieve product for id make it into an entry
+          } 
         })
         .catch((error) => {
-          console.log(error + " fail");
+          console.log(error);
         });
 
-      // this.getAllProducts(this.product);
+      //retrieve products
       await this.getAllProducts(this.product);
 
-      console.log(this.retrievedProducts);
-
-      // this.listEntry.productId = this.lastProduct.productId;
-      console.log(this.listEntry.productId);
-      // this.getAllProducts();
     },
-    /* checkforProduct() {
-      this.products.forEach((product) => {
-        if (product.name === this.listEntryName) {
-          this.listEntry.productId = product.productId;
-        } else {
-          this.createProduct();
-        }
-      });
-    },*/
+
     async getAllProducts(prod) {
-      console.log(this.listEntry.productName);
+      //retrieve products and check for match against passed parameter 
 
       await productService.list().then((response) => {
         this.retrievedProducts = response.data;
       });
       this.retrievedProducts.forEach((p) => {
         if (p.productName === prod.productName) {
+          //if match use that product id in list entry
           this.listEntry.productId = p.productId;
         }
       });
-      console.log(this.listEntry);
+
+      //proceed to make an entry
       this.makeEntry();
 
-      console.log(this.retrievedProducts);
     },
     getAllLists() {
       listService.list().then((response) => {
         this.lists = response.data;
-        console.log(this.lists);
       });
     },
     async getEntries() {
+      //get entries and sort so newest is on top
       await listEntryService.get(this.$route.params.id).then((response) => {
         this.listEntries = response.data;
         this.listEntries.sort((a, b) => b.listEntryId - a.listEntryId);
-   
-       console.log(this.listEntries);
-       console.log("success")
+          console.log("success")
       });
       await this.$store.commit("UPDATE_LIST_ENTRIES", this.listEntries);
     },
     created() {
+      // watch
        this.$watch(
       () => this.listEntries.length,
       (newId, oldId) => {
         this.getEntries();
       })
-      //this.getAllLists();
-      //this.getAllProducts();
+    },
+    beforeMount(){
+       console.log("this was deleted before mount")
+       this.$store.commit("CHANGE_MESSAGE", this.message);
     },
     updated(){
       this.getEntries()

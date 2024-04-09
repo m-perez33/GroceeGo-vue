@@ -1,10 +1,8 @@
 <template>
   <main id="home">
     
-    <h2>{{this.$route.params.id}}</h2>
     <h1>Welcome to GROCEE-GO</h1>
     <p>Select a list to edit from the dropdown menu or create a new list!</p>
-    <h2>{{this.$route.params.id}}</h2>
 
   </main>
 </template>
@@ -18,5 +16,13 @@ export default {
 <style>
 #home{
     margin-top:100px;
+    text-align: center;
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    
+
 }
+h1{
+  color:  rgb(175, 187, 187);
+}
+
 </style>

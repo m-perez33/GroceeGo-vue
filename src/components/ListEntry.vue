@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section class="list-entry">
-      <div v-bind:class="{ quiet: edit, 'info-entry': !edit }">
+      <div v-bind:class="{ disabledMode: edit, 'info-entry': !edit }">
         {{ entry.productName }}
       </div>
       <div class="info-entry" v-show="!edit">
@@ -32,118 +32,77 @@
 </template>
   
 <script>
-import ListEntryService from '../services/ListEntryService';
 import listEntryService from "../services/ListEntryService";
 export default {
-
   data() {
     return {
       edit: false,
-      
-
-    }
+    };
   },
   props: {
     entry: Object,
   },
-  computed: {
-    cost: {
-      get() {
-       
-        return this.entry.cost
-      },
-      set(value) {
-        this.$store.commit('EDIT_COST', value)
-      }
-    },
-    quantity: {
-      get() {
-       
-        return this.entry.quantity
-      },
-      set(value) {
-        this.$store.commit('EDIT_QUANTIY', value)
-      }
-    }
-
-  },
+  computed: {},
   methods: {
-
-    quantityDescription(){
-      //console.log(this.entry)
-      if(this.entry.category == 1 && this.entry.quantity == 1){
-        return "lb"
-      }else if(this.entry.category == 1 ){
-        return "lbs"
+    quantityDescription() {
+      if (this.entry.category == 1 && this.entry.quantity == 1) {
+        return "lb";
+      } else if (this.entry.category == 1) {
+        return "lbs";
       }
 
-      if(this.entry.category == 2 && this.entry.quantity == 1){
-        return "item"
-      }else{
-        return  "items"
+      if (this.entry.category == 2 && this.entry.quantity == 1) {
+        return "item";
+      } else {
+        return "items";
       }
-
-      
     },
+
     removeEntry() {
-
-      if (window.confirm(`Would you like to delete ${this.entry.productName} from your list?`)) {
-        this.$store.commit('REMOVE_LIST_ENTRY', this.entry);
+      if (
+        window.confirm(
+          `Would you like to delete ${this.entry.productName} from your list?`
+        )
+      ) {
+        this.$store.commit("REMOVE_LIST_ENTRY", this.entry);
         //this.listEntry = {};
-        // console.log(this.entry)
 
-        ListEntryService.delete(this.entry.listEntryId)
-        .then((response)=>{
-          if(response.status === 204){
-            console.log("deleted le")
-          }
-        }).catch((error)=>{
-          console.log(error)
-        })
+        listEntryService
+          .delete(this.entry.listEntryId)
+          .then((response) => {
+            if (response.status === 204) {
+              console.log("deleted list entry");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-
     },
     editToggle() {
-            console.log(this.entry)
-
-      this.edit = !this.edit
-      this.updateEntry()
-
-
-
-      //this.saveEdit()
+      //toggle between edit and save buttons
+      this.edit = !this.edit;
+      this.updateEntry();
 
     },
-    updateCost() {
-      //this.edit = !this.edit
 
-      this.$store.commit('EDIT_ENTRY', this.entry);
 
+    updateEntry() {
+       //save updated entry
+      listEntryService
+        .updateEntry(this.entry.listEntryId, this.entry)
+        .then((response) => {
+          if (response === 200) {
+            console.log("success");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
     },
-    updateEntry(){
-
-      console.log(this.entry)
-
-     listEntryService.updateEntry(this.entry.listEntryId, this.entry).then((response)=>{
-        
-        if(response === 200){
-          console.log("success")
-        }
-
-      }).catch((error)=>{
-                console.log(error)
-
-      })
-    
-      this.$store.commit("CHANGE_CURRENT_ENTRY", this.entry.listEntryId)
-
-    }
-
-
-  }
-}
-
+  },
+};
 </script>
   
 <style>
@@ -156,7 +115,7 @@ export default {
   background-color: rgb(207, 226, 226);
 }
 
-.quiet {
+.disabledMode {
   background-color: rgb(207, 226, 226);
   border: 1px solid rgb(207, 226, 226);
   border-radius: 10px;
