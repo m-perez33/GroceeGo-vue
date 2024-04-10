@@ -41,10 +41,12 @@ export default {
   computed: {
     totalAdd() {
       //adds entries for current list
-      return this.$store.state.listEntries.reduce((acc, entry) => {
-        let sum = entry.cost * entry.quantity;
+      let total = this.$store.state.listEntries.reduce((acc, entry) => {
+        let sum = (entry.cost * entry.quantity);
         return (acc += sum);
       }, 0);
+
+      return total.toFixed(2)
     },
   },
   methods: {

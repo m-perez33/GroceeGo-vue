@@ -23,7 +23,7 @@
         :placeholder="entry.quantity"
         v-model="entry.quantity"
       />=
-      <div class="info-entry">${{ entry.quantity * entry.cost }}</div>
+      <div class="info-entry">${{ (entry.quantity * entry.cost).toFixed(2) }}</div>
       <button v-on:click="removeEntry()">Delete</button>
       <button v-on:click="editToggle()" v-show="!edit">Edit</button>
       <button v-on:click="editToggle()" v-show="edit">Save</button>
@@ -42,8 +42,23 @@ export default {
   props: {
     entry: Object,
   },
-  computed: {},
+  computed: {
+   
+    costFixed:{
+  get(){
+            //this function will determine what is displayed in the input
+            return parseFloat(this.entry.cost.toFixed(2));
+        },
+        set(newVal){
+            //this function will run whenever the input changes
+                     this.entry.cost= parseFloat(newVal.toFixed(2))
+ this.value = newVal/2;
+        }
+    
+    }
+  },
   methods: {
+    
     quantityDescription() {
       if (this.entry.category == 1 && this.entry.quantity == 1) {
         return "lb";
@@ -88,7 +103,7 @@ export default {
 
 
     updateEntry() {
-       //save updated entry
+       //save updated ent
       listEntryService
         .updateEntry(this.entry.listEntryId, this.entry)
         .then((response) => {
@@ -136,9 +151,10 @@ export default {
   border: 1px solid black;
   border-radius: 10px;
   height: 20px;
-  width: 100px;
+  width: 130px;
   padding: 10px;
   margin: 10px;
   text-align: center;
+  
 }
 </style>
