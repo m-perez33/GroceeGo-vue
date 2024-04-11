@@ -37,6 +37,7 @@ export default {
   data() {
     return {
       edit: false,
+      cost: this.entry.cost
     };
   },
   props: {
@@ -44,18 +45,7 @@ export default {
   },
   computed: {
    
-    costFixed:{
-  get(){
-            //this function will determine what is displayed in the input
-            return parseFloat(this.entry.cost.toFixed(2));
-        },
-        set(newVal){
-            //this function will run whenever the input changes
-                     this.entry.cost= parseFloat(newVal.toFixed(2))
- this.value = newVal/2;
-        }
-    
-    }
+   
   },
   methods: {
     
