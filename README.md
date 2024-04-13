@@ -15,71 +15,45 @@ than products with cost by item. Being able to add the estimates to the list mak
 ## Front-end (Vue App)
 
 ### Features
-- Command-line interface for easy interaction
-- Intuitive commands for adding and managing grocery items
-- Text-based user interface for simplicity
+- Easy to use single page application design
+- Intuitive interface for adding and managing grocery items
+- Nav bar designed to navigate multiple grocery lists and create/delete grocery lists
 
 ### Getting Started
 1. Clone the repository
    ```bash
-   git clone https://github.com/m-perez33/GroceeGo.git
+   git clone https://github.com/m-perez33/GroceeGo-vue.git
    ```
 
-2. Open the project in IntelliJ IDEA by choosing "Open" or "Import Project."
-3. Locate the main class of the console app.
-4. Right-click on the main class file and select "Run" to execute the application.
+2. Project Setup
+
+     ```bash
+    npm install
+    ```
+
+3. Open a terminal window and run app from the folder by typing:
+
+    ```bash
+    npm run dev
+    ```
+
+4. Make sure the port location matches the location defined in the api. Currently it is set to http://127.0.0.1:5173/. 
+
+
+If you run the Vue app on another port, you must change the port in the api. 
+Please do the following to change the port.
+
+1. Navigate to GroceeGoServer class in the [GroceeGo-api](https://github.com/m-perez33/GroceeGo-api) code.
+2. On line 26 change the address on this line to the address the Vue app is running on 
+
+
+    ```bash
+   config.setAllowedOrigins(Collections.singletonList("http://127.0.0.1:5173/"));
+    ```
+3. Run the api and you should be connected! 
 
 ## Back-end (Console App)
 
 Go to the  [GroceeGo-api](https://github.com/m-perez33/GroceeGo-api) repo for instructions on running the backend. Note that api must be running for the Front-end to work.
-# latest
 
-This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Headed Component Tests with [Cypress Component Testing](https://on.cypress.io/component)
-
-```sh
-npm run test:unit:dev # or `npm run test:unit` for headless testing
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
