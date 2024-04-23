@@ -37,7 +37,7 @@ than products with cost by item. Being able to add the estimates to the list mak
     npm run dev
     ```
 
-4. Make sure the port location matches the location defined in the api. Currently it is set to http://127.0.0.1:5173/. 
+4. Make sure the port location matches the location defined in the api. Currently it is set to http://localhost:5173/. 
 
 
 If you run the Vue app on another port, you must change the port in the api. 
@@ -48,12 +48,12 @@ Please do the following to change the port.
 
 
     ```bash
-   config.setAllowedOrigins(Collections.singletonList("http://127.0.0.1:5173/"));
+   config.setAllowedOrigins(Collections.singletonList("http://localhost:5173/"));
     ```
 3. Run the api and you should be connected! 
 
-## Back-end (Console App)
+## Back-end
 
-Go to the  [GroceeGo-api](https://github.com/m-perez33/GroceeGo-api) repo for instructions on running the backend. Note that api must be running for the Front-end to work.
+Go to the  [GroceeGo-api](https://github.com/m-perez33/GroceeGo-api) repo for instructions on running the back-end. Note that api must be running for the front-end to work.
 
 
